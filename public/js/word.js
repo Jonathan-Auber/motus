@@ -3,8 +3,10 @@ const formContainer = document.querySelector("#form_container")
 const guessWord = document.querySelector("#guess_word");
 const guessSubmit = document.querySelector("#guess_submit");
 let trying = 6;
+// Test
+// let number = 0;
 
-function selectAWord(trying) {
+function selectAWord(trying, number) {
     fetch("/motus/mots.json", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -14,13 +16,22 @@ function selectAWord(trying) {
         })
         .then(function (response) {
             const word = response[Math.floor(Math.random() * 7)];
+            guessWord.value = word.mot[0];
             const div = document.createElement("div");
             container.appendChild(div);
             console.log(word);
 
             let explodedWord = [];
+            let letterOccurences = {};
             for (let i = 0; i < word.mot.length; i++) {
                 explodedWord.push(word.mot[i]);
+                let letter = explodedWord[i];
+                if (letterOccurences[letter]) {
+                    letterOccurences[letter]++;
+                }
+                else {
+                    letterOccurences[letter] = 1;
+                }
                 const span = document.createElement("span");
                 div.appendChild(span);
                 if (i === 0) {
@@ -30,9 +41,9 @@ function selectAWord(trying) {
                     span.innerText = "_";
                 }
             }
-            console.log(trying);
+            console.log(letterOccurences);
 
-            guessSubmit.addEventListener("click", function () { displayGuess(word, explodedWord) });
+            guessSubmit.addEventListener("click", function () { displayGuess(word, explodedWord, letterOccurences) });
 
         })
         .catch(function (error) {
@@ -40,17 +51,34 @@ function selectAWord(trying) {
         });
 }
 
-function displayGuess(word, explodedWord) {
+function displayGuess(word, explodedWord, letterOccurences) {
+    // Test
+    // number++;
+    let guessOccurences = {}
+
+    for (let i = 0; i < word.mot.length; i++) {
+        if (guessOccurences[guessWord.value[i]]) {
+            guessOccurences[guessWord.value[i]]++;
+        }
+        else {
+            guessOccurences[guessWord.value[i]] = 1;
+        }
+        console.log(guessOccurences[guessWord.value[i]]);
+
+    }
+    // 
     const div = document.createElement("div");
     container.appendChild(div);
+
+
     for (let i = 0; i < word.mot.length; i++) {
         const span = document.createElement("span");
+        // span.classList.add("groupEl" + number)
         div.appendChild(span);
 
-
         let letterExist = false;
-        explodedWord.forEach(element => {
-            if (element === guessWord.value[i]) {
+        explodedWord.forEach(letter => {
+            if (letter === guessWord.value[i]) {
                 letterExist = true;
             }
         });
@@ -61,7 +89,18 @@ function displayGuess(word, explodedWord) {
                 span.classList.add("good");
             }
             else if (letterExist) {
-                span.classList.add("almost");
+                // Comment traiter les occurences pour valider almost ou non?
+                // Test
+                // console.log(letterOccurences[guessWord.value[i]]);
+                // console.log(guessOccurences[guessWord.value[i]]);
+                // console.log(guessOccurences[guessWord.value[i]] > letterOccurences[guessWord.value[i]]);
+                // 
+                if (guessOccurences[guessWord.value[i]] > letterOccurences[guessWord.value[i]]) {
+                    span.classList.add("wrong");
+                } else {
+                    span.classList.add("almost");
+
+                }
             }
             else {
                 span.classList.add("wrong");
@@ -78,11 +117,23 @@ function displayGuess(word, explodedWord) {
 
         }
     }
+    // Test
+    // let allSpan = document.querySelectorAll(".groupEl" + number);
+    // console.log(allSpan);
+    // allSpan.forEach(element => {
+    //     if (element.classList.contains("almost")) {
+    //         console.log("Alors, tu galères pepito ?");
+    //     }
+    // })
+    // 
     trying--;
-    console.log(trying);
+    guessWord.value = word.mot[0];
+
+    console.log(guessOccurences);
+
 
     if (trying === 0) {
-        console.log("finito pepito");
+        console.log("Finito pepito !");
         formContainer.classList.add("endGame");
     }
 }
@@ -90,3 +141,4 @@ function displayGuess(word, explodedWord) {
 selectAWord(trying);
 
 // Nb lettre
+// Création Modal pour défaite / victoire
