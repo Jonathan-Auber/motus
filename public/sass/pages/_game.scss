@@ -1,0 +1,22 @@
+.good {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    background-color: $game-primary;
+    padding: 2rem;
+}
+
+.almost {
+    background-color: $game-secondary;
+    clip-path: circle(50% at 50% 50%);
+    padding: 2rem;
+
+}
+
+.wrong {
+    background-color: $game-tertiary;
+    padding: 2rem;
+
+}
+
+.endGame {
+    display: none;
+}
