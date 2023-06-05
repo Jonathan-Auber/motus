@@ -3,8 +3,7 @@ const formContainer = document.querySelector("#form_container")
 const guessWord = document.querySelector("#guess_word");
 const guessSubmit = document.querySelector("#guess_submit");
 let trying = 6;
-// Test
-// let number = 0;
+let number = 0;
 
 function selectAWord(trying, number) {
     fetch("/motus/mots.json", {
@@ -15,7 +14,7 @@ function selectAWord(trying, number) {
             return response.json();
         })
         .then(function (response) {
-            const word = response[Math.floor(Math.random() * 7)];
+            const word = response[Math.floor(Math.random() * 25)];
             guessWord.value = word.mot[0];
             const div = document.createElement("div");
             container.appendChild(div);
@@ -41,8 +40,6 @@ function selectAWord(trying, number) {
                     span.innerText = "_";
                 }
             }
-            console.log(letterOccurences);
-
             guessSubmit.addEventListener("click", function () { displayGuess(word, explodedWord, letterOccurences) });
 
         })
@@ -52,8 +49,7 @@ function selectAWord(trying, number) {
 }
 
 function displayGuess(word, explodedWord, letterOccurences) {
-    // Test
-    // number++;
+    number++;
     let guessOccurences = {}
 
     for (let i = 0; i < word.mot.length; i++) {
@@ -63,17 +59,15 @@ function displayGuess(word, explodedWord, letterOccurences) {
         else {
             guessOccurences[guessWord.value[i]] = 1;
         }
-        console.log(guessOccurences[guessWord.value[i]]);
 
     }
-    // 
     const div = document.createElement("div");
     container.appendChild(div);
 
+    let occurencesDifferences = {};
 
     for (let i = 0; i < word.mot.length; i++) {
         const span = document.createElement("span");
-        // span.classList.add("groupEl" + number)
         div.appendChild(span);
 
         let letterExist = false;
@@ -86,20 +80,14 @@ function displayGuess(word, explodedWord, letterOccurences) {
 
         if (i !== 0) {
             if (word.mot[i] === guessWord.value[i]) {
-                span.classList.add("good");
+                span.classList.add("good", "occurenceOf_" + guessWord.value[i] + "_" + number);
             }
             else if (letterExist) {
-                // Comment traiter les occurences pour valider almost ou non?
-                // Test
-                // console.log(letterOccurences[guessWord.value[i]]);
-                // console.log(guessOccurences[guessWord.value[i]]);
-                // console.log(guessOccurences[guessWord.value[i]] > letterOccurences[guessWord.value[i]]);
-                // 
-                if (guessOccurences[guessWord.value[i]] > letterOccurences[guessWord.value[i]]) {
-                    span.classList.add("wrong");
-                } else {
-                    span.classList.add("almost");
+                span.classList.add("almost");
 
+                if (guessOccurences[guessWord.value[i]] > letterOccurences[guessWord.value[i]]) {
+                    occurencesDifferences[guessWord.value[i]] = guessOccurences[guessWord.value[i]] - letterOccurences[guessWord.value[i]];
+                    span.classList.add("occurenceOf_" + guessWord.value[i] + "_" + number);
                 }
             }
             else {
@@ -113,23 +101,28 @@ function displayGuess(word, explodedWord, letterOccurences) {
             }
         } else {
             span.innerText = word.mot[i];
-            span.classList.add("good");
+            span.classList.add("good", "occurenceOf_" + guessWord.value[i] + "_" + number);
 
         }
     }
-    // Test
-    // let allSpan = document.querySelectorAll(".groupEl" + number);
-    // console.log(allSpan);
-    // allSpan.forEach(element => {
-    //     if (element.classList.contains("almost")) {
-    //         console.log("Alors, tu galères pepito ?");
-    //     }
-    // })
-    // 
+
+    for (let letter in occurencesDifferences) {
+        let goodOcc = document.querySelectorAll(".good.occurenceOf_" + letter + "_" + number);
+        let occ = document.querySelectorAll(".almost.occurenceOf_" + letter + "_" + number);
+
+        for (let i = occurencesDifferences[letter]; i > 0; i--) {
+            if (letterOccurences[letter] - goodOcc.length === 0) {
+                occ[i - 1].classList.add("wrong");
+                occ[i - 1].classList.remove("almost", ".occurenceOf_" + letter + "_" + number);
+            } else if (letterOccurences[letter] - goodOcc.length > 0) {
+                occ[i].classList.add("wrong");
+                occ[i].classList.remove("almost", ".occurenceOf_" + letter + "_" + number);
+            }
+        }
+    }
+
     trying--;
     guessWord.value = word.mot[0];
-
-    console.log(guessOccurences);
 
 
     if (trying === 0) {
@@ -140,5 +133,4 @@ function displayGuess(word, explodedWord, letterOccurences) {
 
 selectAWord(trying);
 
-// Nb lettre
 // Création Modal pour défaite / victoire
