@@ -21,6 +21,36 @@ a {
     opacity: 1;
   }
 }
+@keyframes shake {
+  10%, 90% {
+    transform: translateX(-1px);
+    -webkit-transform: translateX(-1px);
+    -moz-transform: translateX(-1px);
+    -ms-transform: translateX(-1px);
+    -o-transform: translateX(-1px);
+  }
+  20%, 80% {
+    transform: translateX(2px);
+    -webkit-transform: translateX(2px);
+    -moz-transform: translateX(2px);
+    -ms-transform: translateX(2px);
+    -o-transform: translateX(2px);
+  }
+  30%, 50%, 70% {
+    transform: translateX(-4px);
+    -webkit-transform: translateX(-4px);
+    -moz-transform: translateX(-4px);
+    -ms-transform: translateX(-4px);
+    -o-transform: translateX(-4px);
+  }
+  40%, 60% {
+    transform: translateX(4px);
+    -webkit-transform: translateX(4px);
+    -moz-transform: translateX(4px);
+    -ms-transform: translateX(4px);
+    -o-transform: translateX(4px);
+  }
+}
 /* Buttons */
 .btn {
   display: inline-block;
@@ -36,13 +66,28 @@ a {
   -o-border-radius: 10px;
   cursor: pointer;
 }
-.btn:hover {
+
+.btn-grow:hover {
   scale: 1.1;
   transition: 0.5s;
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
   -ms-transition: 0.5s;
   -o-transition: 0.5s;
+}
+
+.btn-reduce:hover {
+  scale: 0.9;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+
+.btn-reduce:hover ~ #double-btn {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  -webkit-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .input {
@@ -63,12 +108,46 @@ div {
 }
 
 /* Game view */
+#game-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 2rem;
+}
+
 #game-header {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
+  width: 100vw;
   padding: 1rem;
+}
+
+#game-legend {
+  box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
+  width: 25%;
+  height: 35vh;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+#game-legend p {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  margin: 1rem auto;
+  padding: 0.5rem;
+  color: white;
+}
+#game-legend p span {
+  display: inline-block;
+}
+
+#guess-container {
+  width: 70%;
 }
 
 .letter_container {
@@ -128,7 +207,7 @@ div {
   margin: 15% auto;
   padding: 2rem;
   border: 1px solid #888;
-  width: 50%;
+  width: 75%;
   animation: modalAnimation 0.5s ease-in-out;
   -webkit-animation: modalAnimation 0.5s ease-in-out;
 }

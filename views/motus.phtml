@@ -1,10 +1,15 @@
 <main id="game-container">
     <div id="game-header">
         <div id="game-header__form">
-            <input type="text" name="guess_word" id="guess_word" class="input" maxlength="6">
-            <button id="guess_submit" class="btn" type="button">Valider</button>
+            <input type="text" name="guess_word" id="guess_word" class="input" autofocus maxlength="6">
+            <button id="guess_submit" class="btn btn-grow" type="button">Valider</button>
         </div>
         <div id="word-to-guess" class="position-left"></div>
+    </div>
+    <div id="game-legend">
+        <p>La lettre est bien placée dans le mot <span class="letter-container good"></span></p>
+        <p>La lettre est mal placée dans le mot <span class="letter-container almost"></span></p>
+        <p>La lettre n'existe pas dans le mot <span class="letter-container wrong"></span></p>
     </div>
     <div id="guess-container"></div>
 </main>
@@ -12,7 +17,7 @@
 <div id="loose-modal" class="modal">
     <div class="modal__content">
         <p>Vous avez perdu !</p>
-        <div><a href="/motus/users/game" class="btn">Recommencer</a></div>
+        <div><a href="/motus/users/game" class="btn btn-grow">Recommencer</a></div>
     </div>
 </div>
 <!-- Victory modal -->
@@ -20,10 +25,10 @@
     <div class="modal__content">
         <p class="score"></p>
         <p>Vous avez gagné, vous pouvez maintenant enregistrer votre score ou tenté d'augmenter votre score !</p>
-        <button id="quits-btn" class="btn">Quitte</button>
-        <span>ou</span>
+        <button id="quits-btn" class="btn btn-reduce">Quitte</button>
+        <span>OU</span>
         <!-- Animation au survole de quits pour attirer sur double? -->
-        <button id="double-btn" class="btn">Double</button>
+        <button id="double-btn" class="btn btn-grow">Double</button>
     </div>
 
 </div>
@@ -40,7 +45,7 @@
                 <!-- Comment mieux sécuriser? Cacher l'input score? -->
                 <input id="user-score" type="number" name="userScore" class="user-score input endGame">
             </div>
-            <button class="btn" type="submit" name="submitScore">Valider</button>
+            <button class="btn btn-grow" type="submit" name="submitScore">Valider</button>
         </form>
     </div>
 </div>

@@ -1,181 +1,214 @@
-// MODAL
-const looseModal = document.querySelector("#loose-modal");
-const winModal = document.querySelector("#win-modal");
-const quitsModal = document.querySelector("#quits-modal");
-const doubleModal = document.querySelector("#double-modal");
-const scoreContainer = document.querySelectorAll(".score");
-const quits = document.querySelector("#quits-btn");
-const double = document.querySelector("#double-btn");
-const userScore = document.querySelector("#user-score");
+// Class for modal display and hiding
+class Modal {
+  constructor(id) {
+    this.modal = document.querySelector(`#${id}`);
+  }
 
-quits.addEventListener("click", function () {
-  displayQuitsModal();
-});
+  // Display the modal
+  display() {
+    this.modal.style.display = "block";
+  }
 
-double.addEventListener("click", function () {
-  resetGame();
-});
-
-function displayQuitsModal() {
-  winModal.style.display = "none";
-  quitsModal.style.display = "block";
-}
-
-function resetGame() {
-  winModal.style.display = "none";
-  guessWord.value = "";
-  wordToGuess.innerHTML = "";
-  guessContainer.innerHTML = "";
-  trying = 0;
-  startGame();
-}
-
-// GAME
-let trying = 0;
-let totalScore = 0;
-const allWords = [];
-const container = document.querySelector("#game-container");
-const gameHeader = document.querySelector("#game-header");
-const wordToGuess = document.querySelector("#word-to-guess");
-const guessContainer = document.querySelector("#guess-container");
-const gameForm = document.querySelector("#game-header__form");
-const guessWord = document.querySelector("#guess_word");
-const guessSubmit = document.querySelector("#guess_submit");
-
-function fetchData() {
-  return new Promise((resolve, reject) => {
-    fetch("/motus/mots.json", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (response) {
-        const words = response.map((word) => word);
-        resolve(words);
-      })
-      .catch(function (error) {
-        reject(error);
-      });
-  });
-}
-
-async function initGame() {
-  try {
-    const words = await fetchData();
-    allWords.push(...words);
-    startGame();
-  } catch (error) {
-    console.log(error);
+  // Hide the modal
+  hide() {
+    this.modal.style.display = "none";
   }
 }
 
-let playedWord = [];
-let word = "";
-let explodedWord = [];
-let letterOccurences = {};
+// Class for the game
+class Game {
+  constructor() {
+    this.trying = 0;
+    this.totalScore = 0;
+    this.allWords = [];
+    this.playedWord = [];
+    this.word = "";
+    this.explodedWord = [];
+    this.letterOccurrences = {};
+    this.container = document.querySelector("#game-container");
+    this.gameHeader = document.querySelector("#game-header");
+    this.wordToGuess = document.querySelector("#word-to-guess");
+    this.guessContainer = document.querySelector("#guess-container");
+    this.gameForm = document.querySelector("#game-header__form");
+    this.guessWord = document.querySelector("#guess_word");
+    this.guessSubmit = document.querySelector("#guess_submit");
+    this.quits = document.querySelector("#quits-btn");
+    this.double = document.querySelector("#double-btn");
+    this.userScore = document.querySelector("#user-score");
+    this.looseModal = new Modal("loose-modal");
+    this.winModal = new Modal("win-modal");
+    this.quitsModal = new Modal("quits-modal");
+    this.doubleModal = new Modal("double-modal");
+    this.scoreContainer = document.querySelectorAll(".score");
 
-function startGame() {
-  const wordSelected = allWords[Math.floor(Math.random() * allWords.length)];
-  for (let i = 0; i < playedWord.length; i++) {
-    if (playedWord[i] === wordSelected.mot) {
-      startGame();
-      return;
-    }
-  }
-  console.log(wordSelected.mot);
-  const div = document.createElement("div");
-  let newExplodedWord = wordSelected.mot.split("");
-  let newLetterOccurences = {};
-  for (let i = 0; i < wordSelected.mot.length; i++) {
-    let letter = newExplodedWord[i];
-    if (newLetterOccurences[letter]) {
-      newLetterOccurences[letter]++;
-    } else {
-      newLetterOccurences[letter] = 1;
-    }
-    const span = document.createElement("span");
-    span.classList.add("letter_container", "reference_word");
-    wordToGuess.appendChild(span);
-    if (i === 0) {
-      span.innerText = wordSelected.mot[i];
-      span.classList.add("good");
-    } else {
-      span.innerText = "_";
-    }
-  }
-  playedWord.push(word);
-  word = wordSelected;
-  explodedWord = newExplodedWord;
-  letterOccurences = newLetterOccurences;
-  return;
-}
-guessSubmit.addEventListener("click", function () {
-  displayGuess(word, explodedWord, letterOccurences);
-});
-function displayGuess(word, explodedWord, letterOccurences) {
-  trying++;
-  let explodedGuessWord = guessWord.value.split("");
-
-  // If the guessing word is the good
-  if (explodedWord.toString() == explodedGuessWord.toString()) {
-    const referenceWord = document.querySelectorAll(".reference_word");
-    let count = 0;
-    referenceWord.forEach((element) => {
-      element.classList.add("good");
-      element.innerText = explodedWord[count];
-      count++;
+    // Event listeners
+    this.quits.addEventListener("click", () => {
+      this.displayQuitsModal();
     });
-    winModal.style.display = "block";
-    displayScore();
-    return;
-  }
-  let guessOccurences = {};
 
-  for (let i = 0; i < guessWord.value.length; i++) {
-    if (guessOccurences[guessWord.value[i]]) {
-      guessOccurences[guessWord.value[i]]++;
-    } else {
-      guessOccurences[guessWord.value[i]] = 1;
-    }
-  }
+    this.double.addEventListener("click", () => {
+      this.resetGame();
+    });
 
-  const div = document.createElement("div");
-  guessContainer.appendChild(div);
+    this.guessSubmit.addEventListener("click", () => {
+      this.displayGuess();
+    });
 
-  let occurencesDifferences = {};
-
-  for (let i = 0; i < word.mot.length; i++) {
-    const span = document.createElement("span");
-    span.classList.add("letter_container");
-    div.appendChild(span);
-
-    let letterExist = false;
-    explodedWord.forEach((letter) => {
-      if (letter === guessWord.value[i]) {
-        letterExist = true;
+    this.guessWord.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        this.displayGuess();
       }
     });
+  }
 
-    if (i !== 0) {
-      if (word.mot[i] === guessWord.value[i]) {
+  // Initialize the game
+  async initGame() {
+    try {
+      const words = await this.fetchData();
+      this.allWords.push(...words);
+      this.startGame();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // Fetch the word data from the server
+  fetchData() {
+    return new Promise((resolve, reject) => {
+      fetch("/motus/mots.json", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          const words = response.map((word) => word);
+          resolve(words);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  // Display the quits modal
+  displayQuitsModal() {
+    this.winModal.hide();
+    this.quitsModal.display();
+  }
+
+  // Reset the game
+  resetGame() {
+    this.winModal.hide();
+    this.guessWord.value = "";
+    this.wordToGuess.innerHTML = "";
+    this.guessContainer.innerHTML = "";
+    this.trying = 0;
+    this.startGame();
+  }
+
+  // Start the game
+  startGame() {
+    const wordSelected = this.getRandomWord();
+    for (let i = 0; i < this.playedWord.length; i++) {
+      if (this.playedWord[i] === wordSelected.mot) {
+        this.startGame();
+        return;
+      }
+    }
+    console.log(wordSelected.mot);
+    const div = document.createElement("div");
+    let newExplodedWord = wordSelected.mot.split("");
+    let newLetterOccurrences = {};
+    for (let i = 0; i < wordSelected.mot.length; i++) {
+      let letter = newExplodedWord[i];
+      if (newLetterOccurrences[letter]) {
+        newLetterOccurrences[letter]++;
+      } else {
+        newLetterOccurrences[letter] = 1;
+      }
+      const span = document.createElement("span");
+      span.classList.add("letter_container", "reference_word");
+      this.wordToGuess.appendChild(span);
+      if (i === 0) {
+        span.innerText = wordSelected.mot[i];
+        span.classList.add("good");
+      } else {
+        span.innerText = "_";
+      }
+    }
+    this.playedWord.push(wordSelected.mot);
+    this.word = wordSelected;
+    this.explodedWord = newExplodedWord;
+    this.letterOccurrences = newLetterOccurrences;
+  }
+
+  // Get a random word from the list
+  getRandomWord() {
+    return this.allWords[Math.floor(Math.random() * this.allWords.length)];
+  }
+
+  // Display the guess result
+  displayGuess() {
+    this.trying++;
+    let explodedGuessWord = this.guessWord.value.split("");
+
+    // If the guessing word is correct
+    if (this.explodedWord.toString() === explodedGuessWord.toString()) {
+      const referenceWord = document.querySelectorAll(".reference_word");
+      let count = 0;
+      referenceWord.forEach((element) => {
+        element.classList.add("good");
+        element.innerText = this.explodedWord[count];
+        count++;
+      });
+      this.winModal.display();
+      this.displayScore();
+      return;
+    }
+    let guessOccurrences = {};
+
+    for (let i = 0; i < this.guessWord.value.length; i++) {
+      if (guessOccurrences[this.guessWord.value[i]]) {
+        guessOccurrences[this.guessWord.value[i]]++;
+      } else {
+        guessOccurrences[this.guessWord.value[i]] = 1;
+      }
+    }
+
+    const div = document.createElement("div");
+    this.guessContainer.appendChild(div);
+
+    let occurrencesDifferences = {};
+
+    for (let i = 0; i < this.word.mot.length; i++) {
+      const span = document.createElement("span");
+      span.classList.add("letter_container");
+      div.appendChild(span);
+
+      let letterExist = false;
+      this.explodedWord.forEach((letter) => {
+        if (letter === this.guessWord.value[i]) {
+          letterExist = true;
+        }
+      });
+
+      if (this.word.mot[i] === this.guessWord.value[i]) {
         span.classList.add(
           "good",
-          "occurenceOf_" + guessWord.value[i] + "_" + trying
+          "occurenceOf_" + this.guessWord.value[i] + "_" + this.trying
         );
       } else if (letterExist) {
         span.classList.add("almost");
 
         if (
-          guessOccurences[guessWord.value[i]] >
-          letterOccurences[guessWord.value[i]]
+          guessOccurrences[this.guessWord.value[i]] >
+          this.letterOccurrences[this.guessWord.value[i]]
         ) {
-          occurencesDifferences[guessWord.value[i]] =
-            guessOccurences[guessWord.value[i]] -
-            letterOccurences[guessWord.value[i]];
+          occurrencesDifferences[this.guessWord.value[i]] =
+            guessOccurrences[this.guessWord.value[i]] -
+            this.letterOccurrences[this.guessWord.value[i]];
           span.classList.add(
-            "occurenceOf_" + guessWord.value[i] + "_" + trying
+            "occurenceOf_" + this.guessWord.value[i] + "_" + this.trying
           );
         }
       } else {
@@ -184,60 +217,56 @@ function displayGuess(word, explodedWord, letterOccurences) {
 
       span.innerText = "_";
 
-      if (guessWord.value[i] !== undefined) {
-        span.innerText = guessWord.value[i];
+      if (this.guessWord.value[i] !== undefined) {
+        span.innerText = this.guessWord.value[i];
       }
-    } else {
-      span.innerText = word.mot[i];
-      span.classList.add(
-        "good",
-        "occurenceOf_" + guessWord.value[i] + "_" + trying
+    }
+
+    for (let letter in occurrencesDifferences) {
+      let goodOcc = document.querySelectorAll(
+        ".good.occurenceOf_" + letter + "_" + this.trying
       );
-    }
-  }
+      let occ = document.querySelectorAll(
+        ".almost.occurenceOf_" + letter + "_" + this.trying
+      );
 
-  for (let letter in occurencesDifferences) {
-    let goodOcc = document.querySelectorAll(
-      ".good.occurenceOf_" + letter + "_" + trying
-    );
-    let occ = document.querySelectorAll(
-      ".almost.occurenceOf_" + letter + "_" + trying
-    );
-
-    for (let i = occurencesDifferences[letter]; i > 0; i--) {
-      if (letterOccurences[letter] - goodOcc.length === 0) {
-        occ[i - 1].classList.add("wrong");
-        occ[i - 1].classList.remove(
-          "almost",
-          ".occurenceOf_" + letter + "_" + trying
-        );
-      } else if (letterOccurences[letter] - goodOcc.length > 0) {
-        occ[i].classList.add("wrong");
-        occ[i].classList.remove(
-          "almost",
-          ".occurenceOf_" + letter + "_" + trying
-        );
+      for (let i = occurrencesDifferences[letter]; i > 0; i--) {
+        if (this.letterOccurrences[letter] - goodOcc.length === 0) {
+          occ[i - 1].classList.add("wrong");
+          occ[i - 1].classList.remove(
+            "almost",
+            ".occurenceOf_" + letter + "_" + this.trying
+          );
+        } else if (this.letterOccurrences[letter] - goodOcc.length > 0) {
+          occ[i].classList.add("wrong");
+          occ[i].classList.remove(
+            "almost",
+            ".occurenceOf_" + letter + "_" + this.trying
+          );
+        }
       }
     }
+
+    this.guessWord.value = "";
+    this.guessWord.focus();
+
+    if (this.trying === 6) {
+      this.gameForm.classList.add("endGame");
+      this.looseModal.display();
+    }
   }
 
-  guessWord.value = "";
-
-  if (trying === 6) {
-    console.log("Finito pepito !");
-    gameForm.classList.add("endGame");
-    looseModal.style.display = "block";
+  // Display the score
+  displayScore() {
+    let score;
+    score = Math.round(50 / this.trying);
+    this.totalScore += parseInt(score);
+    this.scoreContainer.forEach((element) => {
+      element.innerText = "Votre score est de " + this.totalScore + " points !";
+    });
+    this.userScore.value = this.totalScore;
   }
 }
 
-function displayScore() {
-  let score;
-  score = Math.round(50 / trying);
-  totalScore += score;
-  scoreContainer.forEach((element) => {
-    element.innerText = "Votre score est de " + totalScore + " points !";
-  });
-  userScore.value += totalScore;
-}
-
-initGame();
+const game = new Game();
+game.initGame();
