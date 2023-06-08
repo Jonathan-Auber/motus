@@ -25,6 +25,6 @@ class UsersController extends Controller
         if (isset($_POST["username"]) && intval($_POST["userScore"]) > 0) {
             $this->model->saveScore();
         }
-        header("Location: /motus/users/index");
+        header("Location: /motus/users/game");
     }
 }

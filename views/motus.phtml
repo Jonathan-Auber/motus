@@ -4,6 +4,9 @@
             <input type="text" name="guess_word" id="guess_word" class="input" maxlength="6">
             <button id="guess_submit" class="btn" type="button">Valider</button>
         </div>
+        <div id="word-to-guess" class="position-left"></div>
+    </div>
+    <div id="guess-container"></div>
 </main>
 <!-- Loose modal -->
 <div id="loose-modal" class="modal">
@@ -15,7 +18,7 @@
 <!-- Victory modal -->
 <div id="win-modal" class="modal">
     <div class="modal__content">
-        <p class="score">Votre score est de</p>
+        <p class="score"></p>
         <p>Vous avez gagné, vous pouvez maintenant enregistrer votre score ou tenté d'augmenter votre score !</p>
         <button id="quits-btn" class="btn">Quitte</button>
         <span>ou</span>
@@ -33,7 +36,7 @@
                 <input id="username" type="text" name="username" class="input">
             </div>
             <div>
-                <p class="score">Votre score est de</p>
+                <p class="score"></p>
                 <!-- Comment mieux sécuriser? Cacher l'input score? -->
                 <input id="user-score" type="number" name="userScore" class="user-score input endGame">
             </div>

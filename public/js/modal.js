@@ -1,5 +1,5 @@
 // MODAL
-const looseModal = document.querySelector("#loose-modal");
+const looseModal = document.querySelector("#looseM-modal");
 const winModal = document.querySelector("#win-modal");
 const quitsModal = document.querySelector("#quits-modal");
 const doubleModal = document.querySelector("#double-modal");
@@ -26,7 +26,7 @@ function resetGame() {
   wordToGuess.innerHTML = "";
   guessContainer.innerHTML = "";
   trying = 0;
-  startGame();
+  selectAWord(trying);
 }
 
 // GAME
@@ -64,6 +64,7 @@ function fetchData() {
 async function initGame() {
   try {
     const words = await fetchData();
+    console.log(words);
     allWords.push(...words);
     startGame();
   } catch (error) {
@@ -74,14 +75,17 @@ async function initGame() {
 function startGame() {
   // let endGame = false;
   const word = allWords[Math.floor(Math.random() * allWords.length)];
-  console.log(word.mot);
-  guessWord.value = word.mot[0];
+  console.log(word);
+  guessWord.value = word[0];
   const div = document.createElement("div");
+  // gameHeader.appendChild(div);
+  // div.classList.add("position-left");
+  console.log(word);
 
-  let explodedWord = word.mot.split("");
+  let explodedWord = word.split("");
 
   let letterOccurences = {};
-  for (let i = 0; i < word.mot.length; i++) {
+  for (let i = 0; i < word.length; i++) {
     let letter = explodedWord[i];
     if (letterOccurences[letter]) {
       letterOccurences[letter]++;
@@ -92,7 +96,7 @@ function startGame() {
     span.classList.add("letter_container", "reference_word");
     wordToGuess.appendChild(span);
     if (i === 0) {
-      span.innerText = word.mot[i];
+      span.innerText = word[i];
       span.classList.add("good");
     } else {
       span.innerText = "_";
@@ -109,7 +113,6 @@ function startGame() {
 
 function displayGuess(word, explodedWord, letterOccurences) {
   trying++;
-  console.log(trying);
   let explodedGuessWord = guessWord.value.split("");
 
   // If the guessing word is the good
@@ -140,7 +143,7 @@ function displayGuess(word, explodedWord, letterOccurences) {
 
   let occurencesDifferences = {};
 
-  for (let i = 0; i < word.mot.length; i++) {
+  for (let i = 0; i < word.length; i++) {
     const span = document.createElement("span");
     span.classList.add("letter_container");
     div.appendChild(span);
@@ -153,7 +156,7 @@ function displayGuess(word, explodedWord, letterOccurences) {
     });
 
     if (i !== 0) {
-      if (word.mot[i] === guessWord.value[i]) {
+      if (word[i] === guessWord.value[i]) {
         span.classList.add(
           "good",
           "occurenceOf_" + guessWord.value[i] + "_" + trying
@@ -182,7 +185,7 @@ function displayGuess(word, explodedWord, letterOccurences) {
         span.innerText = guessWord.value[i];
       }
     } else {
-      span.innerText = word.mot[i];
+      span.innerText = word[i];
       span.classList.add(
         "good",
         "occurenceOf_" + guessWord.value[i] + "_" + trying
@@ -215,7 +218,7 @@ function displayGuess(word, explodedWord, letterOccurences) {
     }
   }
 
-  guessWord.value = word.mot[0];
+  guessWord.value = word[0];
 
   if (trying === 6) {
     console.log("Finito pepito !");
