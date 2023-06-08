@@ -16,5 +16,14 @@ class UsersRepository extends Model
         $this->session = new Session();
     }
 
-
+    public function saveScore()
+    {
+        $username = trim(htmlspecialchars($_POST["username"]));
+        $score = trim(htmlspecialchars($_POST["userScore"]));
+        $query = $this->pdo->prepare("INSERT INTO score SET username = :username, score = :score");
+        $query->execute([
+            "username" => $username,
+            "score" => $score
+        ]);
+    }
 }

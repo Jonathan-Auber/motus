@@ -1,7 +1,44 @@
-<main id="game_container">
-    <div id="form_container">
-        <input type="text" name="guess_word" id="guess_word" maxlength="6">
-        <button id="guess_submit" type="button">Valider</button>
-    </form>
-    <script src="/motus/public/js/word.js"></script>
+<main id="game-container">
+    <div id="game-header">
+        <div id="game-header__form">
+            <input type="text" name="guess_word" id="guess_word" class="input" maxlength="6">
+            <button id="guess_submit" class="btn" type="button">Valider</button>
+        </div>
 </main>
+<!-- Loose modal -->
+<div id="loose-modal" class="modal">
+    <div class="modal__content">
+        <p>Vous avez perdu !</p>
+        <div><a href="/motus/users/game" class="btn">Recommencer</a></div>
+    </div>
+</div>
+<!-- Victory modal -->
+<div id="win-modal" class="modal">
+    <div class="modal__content">
+        <p class="score">Votre score est de</p>
+        <p>Vous avez gagné, vous pouvez maintenant enregistrer votre score ou tenté d'augmenter votre score !</p>
+        <button id="quits-btn" class="btn">Quitte</button>
+        <span>ou</span>
+        <!-- Animation au survole de quits pour attirer sur double? -->
+        <button id="double-btn" class="btn">Double</button>
+    </div>
+
+</div>
+<!-- Quits modal -->
+<div id="quits-modal" class="modal">
+    <div class="modal__content">
+        <form action="/motus/users/saveScore" method="POST">
+            <div>
+                <label for="username">Pseudonyme : </label>
+                <input id="username" type="text" name="username" class="input">
+            </div>
+            <div>
+                <p class="score">Votre score est de</p>
+                <!-- Comment mieux sécuriser? Cacher l'input score? -->
+                <input id="user-score" type="number" name="userScore" class="user-score input endGame">
+            </div>
+            <button class="btn" type="submit" name="submitScore">Valider</button>
+        </form>
+    </div>
+</div>
+<script src="./../public/js/game.js"></script>

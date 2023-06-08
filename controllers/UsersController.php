@@ -10,13 +10,21 @@ class UsersController extends Controller
 
     public function index()
     {
-            $pageTitle = "Login";
-            Render::render("index", compact("pageTitle"));
-
+        $pageTitle = "Accueil";
+        Render::render("index", compact("pageTitle"));
     }
 
-    public function game(){
+    public function game()
+    {
         $pageTitle = "Motus";
         Render::render("motus", compact("pageTitle"));
+    }
+
+    public function saveScore()
+    {
+        if (isset($_POST["username"]) && intval($_POST["userScore"]) > 0) {
+            $this->model->saveScore();
+        }
+        header("Location: /motus/users/index");
     }
 }

@@ -1,18 +1,9 @@
+/* Layout */
 body {
-    background-color: $primary-color;
+  background-color: $primary-color;
 }
 
 div {
-    padding: 2rem;
-    text-align: center;
-}
-
-span {
-    margin: 0.1rem;
-    padding: 0.5rem;
-    font-size: 2rem;
-    display: inline-block;
-    width: 40px;
-    border: solid black 0.5px;
-
+  padding: 1rem;
+  text-align: center;
 }
