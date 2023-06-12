@@ -2,9 +2,9 @@
     <div id="game-header">
         <div id="game-header__form">
             <input type="text" name="guess_word" id="guess_word" class="input" autofocus maxlength="6">
-            <button id="guess_submit" class="btn btn-grow" type="button">Valider</button>
+            <button id="guess_submit" class="btn btn-primary btn-grow" type="button">Valider</button>
         </div>
-        <div id="word-to-guess" class="position-left"></div>
+        <div id="word-to-guess"></div>
     </div>
     <div id="game-legend">
         <p>La lettre est bien placée dans le mot <span class="letter-container good"></span></p>
@@ -13,40 +13,45 @@
     </div>
     <div id="guess-container"></div>
 </main>
-<!-- Loose modal -->
-<div id="loose-modal" class="modal">
-    <div class="modal__content">
-        <p>Vous avez perdu !</p>
-        <div><a href="/motus/users/game" class="btn btn-grow">Recommencer</a></div>
-    </div>
-</div>
-<!-- Victory modal -->
-<div id="win-modal" class="modal">
-    <div class="modal__content">
-        <p class="score"></p>
-        <p>Vous avez gagné, vous pouvez maintenant enregistrer votre score ou tenté d'augmenter votre score !</p>
-        <button id="quits-btn" class="btn btn-reduce">Quitte</button>
-        <span>OU</span>
-        <!-- Animation au survole de quits pour attirer sur double? -->
-        <button id="double-btn" class="btn btn-grow">Double</button>
-    </div>
+<div id="modal-container">
 
-</div>
-<!-- Quits modal -->
-<div id="quits-modal" class="modal">
-    <div class="modal__content">
-        <form action="/motus/users/saveScore" method="POST">
+    <!-- Loose modal -->
+    <div id="loose-modal" class="modal">
+        <div class="modal__content">
+            <p>Vous avez perdu !</p>
+            <div><a href="/motus/users/game" class="btn btn-primary btn-grow">Recommencer</a></div>
+        </div>
+    </div>
+    <!-- Victory modal -->
+    <div id="win-modal" class="modal">
+        <div class="modal__content">
+            <p class="score"></p>
+            <p>Vous avez gagné, vous pouvez maintenant enregistrer votre score ou tenté d'augmenter votre score !</p>
             <div>
-                <label for="username">Pseudonyme : </label>
-                <input id="username" type="text" name="username" class="input">
+                <button id="quits-btn" class="btn btn-primary btn-reduce">Quitte</button>
+                <span>OU</span>
+                <!-- Animation au survole de quits pour attirer sur double? -->
+                <button id="double-btn" class="btn btn-primary btn-grow">Double</button>
             </div>
-            <div>
-                <p class="score"></p>
-                <!-- Comment mieux sécuriser? Cacher l'input score? -->
-                <input id="user-score" type="number" name="userScore" class="user-score input endGame">
-            </div>
-            <button class="btn btn-grow" type="submit" name="submitScore">Valider</button>
-        </form>
+        </div>
+
+    </div>
+    <!-- Quits modal -->
+    <div id="quits-modal" class="modal">
+        <div class="modal__content">
+            <form action="/motus/users/saveScore" method="POST">
+                <div>
+                    <label for="username">Pseudonyme : </label>
+                    <input id="username" type="text" name="username" class="input">
+                </div>
+                <div>
+                    <p class="score"></p>
+                    <!-- Comment mieux sécuriser? Cacher l'input score? -->
+                    <input id="user-score" type="number" name="userScore" class="user-score input endGame">
+                </div>
+                <button class="btn btn-primary btn-grow" type="submit" name="submitScore">Valider</button>
+            </form>
+        </div>
     </div>
 </div>
 <script src="./../public/js/game.js"></script>

@@ -165,6 +165,7 @@ class Game {
       this.displayScore();
       return;
     }
+
     let guessOccurrences = {};
 
     for (let i = 0; i < this.guessWord.value.length; i++) {
@@ -176,6 +177,7 @@ class Game {
     }
 
     const div = document.createElement("div");
+    div.classList.add("no_wrap");
     this.guessContainer.appendChild(div);
 
     let occurrencesDifferences = {};

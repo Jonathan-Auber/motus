@@ -9,9 +9,26 @@
     <title><?= $pageTitle ?></title>
 
 </head>
+<!-- Navbar -->
+<header class="header">
+    <nav class="header__navbar">
+        <div id="link-container" class="header__navbar__link-container">
+            <a href="/motus/Users/index">Accueil</a>
+            <a href="/motus/Users/game">Motus</a>
+            <a href="/motus/Score/displayScore">Scores</a>
+        </div>
+        <!-- Div pour évènement menu burger -->
+        <div id="menu-burger" class="header__navbar__menu-burger">
+            <span class="burger-top"></span>
+            <span class="burger-middle"></span>
+            <span class="burger-bottom"></span>
+        </div>
+    </nav>
+</header>
 
 <body>
     <?= $pageContent ?>
 </body>
+<script src="/motus/public/js/menu-burger.js"></script>
 
 </html>

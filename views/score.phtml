@@ -1,0 +1,13 @@
+<main id="score-container">
+    <h1>Wall of Fame</h1>
+    <?php $i = 1;
+    foreach ($allScores as $score) { ?>
+        <div>
+            <span><?php echo $i . "."; ?></span>
+            <span class="user"><?= $score['username'] ?></span>
+            <span><?php echo $score['user_score'] . " Points" ?></span>
+        </div>
+    <?php
+        $i++;
+    } ?>
+</main>

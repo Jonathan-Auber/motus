@@ -1,7 +1,12 @@
 @import "./base/reset";
+@import "./base/typography";
 @import "./base/animations";
 @import "./utils/variables";
 @import "./components/buttons";
 
 @import "./layout/layout.scss";
-@import "./pages/game.scss";
+@import "./layout/header.scss";
+@import "./pages/index.scss";
+@import "./pages/motus.scss";
+@import "./pages/score.scss";
+@import "./layout/media.scss";

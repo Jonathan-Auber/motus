@@ -2,17 +2,31 @@
 
 .btn {
   display: inline-block;
-  width: 150px;
-  margin: 1rem;
+  margin: 0.5rem;
   padding: 0.8rem;
   border-radius: 10px;
   border: none;
-  background-color: $game-primary;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
   cursor: pointer;
+  font-family: "SF-Mono", "Courier New", Courier, monospace;
+}
+
+.btn-primary {
+  width: 150px;
+  background-color: $game-primary;
+}
+
+.btn-secondary {
+  width: 250px;
+  border: $game-primary solid 1px;
+  color: $game-primary;
+}
+
+.btn-secondary:hover {
+  background: rgb(218, 157, 32, 0.2);
 }
 
 .btn-grow:hover {
@@ -40,6 +54,7 @@
 
 .input {
   width: 150px;
+  margin: 0.5rem;
   padding: 0.8rem;
   border-radius: 10px;
   border: none;

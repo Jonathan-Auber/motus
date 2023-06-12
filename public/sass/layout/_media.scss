@@ -1,0 +1,148 @@
+/* MEDIA QUERIES */
+@media screen and (max-width: 1349px) {
+  /* BREAK MENU BURGER */
+  .header__navbar__menu-burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    cursor: pointer;
+    z-index: 200;
+    margin-left: auto;
+    padding: 0.5rem;
+
+    & span {
+      border: $game-primary solid 1px;
+      background-color: $game-primary;
+      transition: 0.4s ease-out;
+      -webkit-transition: 0.4s ease-out;
+      -moz-transition: 0.4s ease-out;
+      -ms-transition: 0.4s ease-out;
+      -o-transition: 0.4s ease-out;
+    }
+  }
+
+  .burger-top {
+    width: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .burger-middle {
+    width: 1.5rem;
+  }
+
+  .burger-bottom {
+    width: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .header__navbar__link-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transition: 1s ease-out;
+    -webkit-transition: 1s ease-out;
+    -moz-transition: 1s ease-out;
+    -ms-transition: 1s ease-out;
+    -o-transition: 1s ease-out;
+    background-color: rgb(31, 32, 57, 0.5);
+
+    & a {
+      margin: 1.2rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  /* Les classes qui seront Toggle pour le menu burger */
+
+  .fixed {
+    position: fixed;
+    top: 30px;
+    right: 25px;
+  }
+
+  .off {
+    display: none;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+
+  .close-top {
+    margin-bottom: -1px;
+    transform: rotate(405deg);
+    -webkit-transform: rotate(405deg);
+    -moz-transform: rotate(405deg);
+    -ms-transform: rotate(405deg);
+    -o-transform: rotate(405deg);
+  }
+
+  .close-bottom {
+    margin-top: -1px;
+    width: 2rem;
+    transform: rotate(495deg);
+    -webkit-transform: rotate(495deg);
+    -moz-transform: rotate(495deg);
+    -ms-transform: rotate(495deg);
+    -o-transform: rotate(495deg);
+    animation: slideTop 1s ease-out 0;
+    -webkit-animation: slideTop 1s ease-out 0;
+  }
+
+  .display-link-container {
+    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
+  }
+
+  // MOTUS PAGE
+
+  #game-header {
+    flex-direction: column-reverse;
+    align-items: center;
+    &__form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  #game-legend {
+    display: none;
+  }
+
+  .no_wrap {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  .letter_container {
+    width: 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  // INDEX PAGE
+  .index-container__btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 2rem;
+  }
+}

@@ -4,6 +4,9 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   padding: 2rem;
+  & span {
+    text-align: center;
+  }
 }
 
 #game-header {
@@ -13,20 +16,26 @@
   align-items: center;
   width: 100vw;
   padding: 1rem;
-  // box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
+}
+
+#word-to-guess {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 1rem;
+  color: $font-secondary-color;
 }
 
 #game-legend {
   box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
   width: 25%;
-  height: 35vh;
   margin-top: 10vh;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   & p {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     margin: 1rem auto;
@@ -34,12 +43,22 @@
     color: white;
     & span {
       display: inline-block;
+      width: 40px;
+      height: 35px;
+      margin-left: 0.8rem;
     }
   }
 }
 
 #guess-container {
   width: 70%;
+  color: $font-secondary-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & div {
+    margin: 0.5rem;
+  }
 }
 
 .letter_container {
@@ -52,6 +71,7 @@
   background-color: white;
   text-transform: uppercase;
 }
+
 .good {
   background-color: $game-primary;
   padding: 0.8rem;
@@ -76,10 +96,6 @@
   display: none;
 }
 
-.position-left {
-  margin-right: auto;
-}
-
 .modal {
   display: none;
   position: fixed;
@@ -91,13 +107,14 @@
   overflow: auto;
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
+  color: $font-secondary-color;
   &__content {
     position: relative;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: space-evenly;
-    // align-items: center;
-    // background-color: #b5a7a7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
     background-color: #eae0e0;
     margin: 15% auto;
     padding: 2rem;
@@ -109,4 +126,10 @@
       margin: 1rem;
     }
   }
+}
+
+#modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -1,9 +1,6 @@
 /* Layout */
 body {
+  font-family: $font-family-primary;
+  color: $font-primary-color;
   background-color: $primary-color;
-}
-
-div {
-  padding: 1rem;
-  text-align: center;
 }
