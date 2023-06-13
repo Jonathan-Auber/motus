@@ -152,6 +152,10 @@ class Game {
 
   // Display the guess result
   displayGuess() {
+    if (this.guessWord.value === "") {
+      return;
+    }
+
     this.trying++;
     let explodedGuessWord = this.guessWord.value.split("");
 
