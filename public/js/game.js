@@ -109,6 +109,7 @@ class Game {
   // Start the game
   startGame() {
     const wordSelected = this.getRandomWord();
+    // Check for a new word not already used
     for (let i = 0; i < this.playedWord.length; i++) {
       if (this.playedWord[i] === wordSelected.mot) {
         this.startGame();
@@ -116,7 +117,8 @@ class Game {
       }
     }
     console.log(wordSelected.mot);
-    const div = document.createElement("div");
+
+    // Create an object of occurences of the selected word
     let newExplodedWord = wordSelected.mot.split("");
     let newLetterOccurrences = {};
     for (let i = 0; i < wordSelected.mot.length; i++) {
@@ -126,6 +128,7 @@ class Game {
       } else {
         newLetterOccurrences[letter] = 1;
       }
+      // Insert the selected word in the webpage
       const span = document.createElement("span");
       span.classList.add("letter_container", "reference_word");
       this.wordToGuess.appendChild(span);
@@ -152,7 +155,7 @@ class Game {
     this.trying++;
     let explodedGuessWord = this.guessWord.value.split("");
 
-    // If the guessing word is correct
+    // If the guessing word is correct, exit
     if (this.explodedWord.toString() === explodedGuessWord.toString()) {
       const referenceWord = document.querySelectorAll(".reference_word");
       let count = 0;
@@ -166,8 +169,8 @@ class Game {
       return;
     }
 
+    // Create Occurence of the guessing word
     let guessOccurrences = {};
-
     for (let i = 0; i < this.guessWord.value.length; i++) {
       if (guessOccurrences[this.guessWord.value[i]]) {
         guessOccurrences[this.guessWord.value[i]]++;
@@ -176,18 +179,19 @@ class Game {
       }
     }
 
+    // Create the container for the guessing word
     const div = document.createElement("div");
     div.classList.add("no_wrap");
     this.guessContainer.appendChild(div);
 
     let occurrencesDifferences = {};
-
     for (let i = 0; i < this.word.mot.length; i++) {
       const span = document.createElement("span");
       span.classList.add("letter_container");
       div.appendChild(span);
 
       let letterExist = false;
+      // Check if letter exist in the word to find
       this.explodedWord.forEach((letter) => {
         if (letter === this.guessWord.value[i]) {
           letterExist = true;
@@ -201,7 +205,7 @@ class Game {
         );
       } else if (letterExist) {
         span.classList.add("almost");
-
+        // Create the difference of occurences
         if (
           guessOccurrences[this.guessWord.value[i]] >
           this.letterOccurrences[this.guessWord.value[i]]
@@ -224,6 +228,7 @@ class Game {
       }
     }
 
+    // Convert excess letter form almost to wrong
     for (let letter in occurrencesDifferences) {
       let goodOcc = document.querySelectorAll(
         ".good.occurenceOf_" + letter + "_" + this.trying
@@ -252,6 +257,7 @@ class Game {
     this.guessWord.value = "";
     this.guessWord.focus();
 
+    // Verify try limit
     if (this.trying === 6) {
       this.gameForm.classList.add("endGame");
       this.looseModal.display();

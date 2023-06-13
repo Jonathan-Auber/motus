@@ -156,7 +156,12 @@ body {
 /* Index view */
 .index-container {
   margin-top: 2vh;
-  padding: 2rem;
+  margin: 1rem;
+  padding: 1rem;
+}
+.index-container__title {
+  text-align: center;
+  margin: 3rem;
 }
 .index-container__text {
   height: auto;
@@ -168,7 +173,7 @@ body {
   margin-top: 2rem;
 }
 .index-container__btn {
-  margin-top: 2rem;
+  margin-top: 5rem;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -202,7 +207,7 @@ body {
   color: #000000;
 }
 
-#game-legend {
+.game-legend {
   box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
   width: 25%;
   margin-top: 10vh;
@@ -211,7 +216,7 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
 }
-#game-legend p {
+.game-legend__text {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -220,7 +225,7 @@ body {
   padding: 0.5rem;
   color: white;
 }
-#game-legend p span {
+.game-legend__text-legend {
   display: inline-block;
   width: 40px;
   height: 35px;
@@ -311,17 +316,17 @@ body {
   align-items: center;
 }
 
-/* Score biew */
-#score-container {
+/* Score view */
+.score-container {
   padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#score-container h1 {
+.score-container__title {
   margin: 2rem;
 }
-#score-container div {
+.score-container__users {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -334,6 +339,20 @@ body {
   margin-left: 0.5rem;
   margin-right: 2rem;
   color: #ffffff;
+}
+
+.error-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.error-container__code {
+  margin: 1rem;
+}
+.error-container__description {
+  margin: 1rem;
 }
 
 /* MEDIA QUERIES */
@@ -447,7 +466,7 @@ body {
     flex-direction: column;
     justify-content: center;
   }
-  #game-legend {
+  .game-legend {
     display: none;
   }
   .no_wrap {

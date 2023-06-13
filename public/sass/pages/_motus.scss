@@ -25,7 +25,7 @@
   color: $font-secondary-color;
 }
 
-#game-legend {
+.game-legend {
   box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
   width: 25%;
   margin-top: 10vh;
@@ -33,7 +33,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  & p {
+  &__text {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -41,7 +41,7 @@
     margin: 1rem auto;
     padding: 0.5rem;
     color: white;
-    & span {
+    &-legend {
       display: inline-block;
       width: 40px;
       height: 35px;

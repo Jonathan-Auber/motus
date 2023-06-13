@@ -1,8 +1,8 @@
-<main id="score-container">
-    <h1>Wall of Fame</h1>
+<main class="score-container">
+    <h1 class="score-container__title">Wall of Fame</h1>
     <?php $i = 1;
     foreach ($allScores as $score) { ?>
-        <div>
+        <div class="score-container__users">
             <span><?php echo $i . "."; ?></span>
             <span class="user"><?= $score['username'] ?></span>
             <span><?php echo $score['user_score'] . " Points" ?></span>

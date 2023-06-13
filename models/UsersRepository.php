@@ -19,12 +19,16 @@ class UsersRepository extends Model
 
     public function saveScore()
     {
-        $username = trim(htmlspecialchars($_POST["username"]));
-        $score = trim(htmlspecialchars($_POST["userScore"]));
-        $query = $this->pdo->prepare("INSERT INTO {$this->scoreTable} SET username = :username, user_score = :score");
-        $query->execute([
-            "username" => $username,
-            "score" => $score
-        ]);
+        if (!empty($_POST["username"])) {
+            $username = trim(htmlspecialchars($_POST["username"]));
+            $score = trim(htmlspecialchars($_POST["userScore"]));
+            $query = $this->pdo->prepare("INSERT INTO {$this->scoreTable} SET username = :username, user_score = :score");
+            $query->execute([
+                "username" => $username,
+                "score" => $score
+            ]);
+        } else {
+            throw new Exception("400 : Vous n'avez pas rentré votre nom d'utilisateur");
+        }
     }
 }
