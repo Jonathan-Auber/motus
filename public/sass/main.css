@@ -124,8 +124,8 @@ body {
   background-color: #1f2039;
 }
 
-/*HEADER */
-/* NAVBAR */
+/* Header */
+/* Navbar */
 .header__navbar {
   width: 100vw;
   height: 10vh;
@@ -355,9 +355,9 @@ body {
   margin: 1rem;
 }
 
-/* MEDIA QUERIES */
+/* Media Queries */
 @media screen and (max-width: 1349px) {
-  /* BREAK MENU BURGER */
+  /* BURGER MENU */
   .header__navbar__menu-burger {
     display: flex;
     flex-direction: column;
@@ -417,7 +417,7 @@ body {
     margin: 1.2rem;
     font-size: 1.2rem;
   }
-  /* Les classes qui seront Toggle pour le menu burger */
+  /* Class Toggle for burger menu */
   .fixed {
     position: fixed;
     top: 30px;
@@ -457,6 +457,7 @@ body {
     -ms-transform: translateX(0%);
     -o-transform: translateX(0%);
   }
+  /* MOTUS PAGE */
   #game-header {
     flex-direction: column-reverse;
     align-items: center;
@@ -478,6 +479,7 @@ body {
   }
 }
 @media screen and (max-width: 768px) {
+  /* INDEX PAGE */
   .index-container__btn {
     display: flex;
     flex-direction: column;

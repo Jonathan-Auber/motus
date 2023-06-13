@@ -3,7 +3,6 @@
 namespace models;
 
 use Exception;
-use utils\Session;
 
 class UsersRepository extends Model
 {
