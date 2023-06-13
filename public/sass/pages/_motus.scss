@@ -51,13 +51,15 @@
 }
 
 #guess-container {
-  width: 70%;
+  width: 65%;
   color: $font-secondary-color;
   display: flex;
   flex-direction: column;
   align-items: center;
   & div {
-    margin: 0.5rem;
+    // width: 70%;
+    // text-align: start;
+    margin: 0.5rem 20rem 0.5rem 0rem;
   }
 }
 

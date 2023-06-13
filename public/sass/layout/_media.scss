@@ -124,6 +124,12 @@
     }
   }
 
+  #guess-container {
+    & div {
+      margin: 0.5rem;
+    }
+  }
+
   .game-legend {
     display: none;
   }
