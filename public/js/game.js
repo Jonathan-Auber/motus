@@ -18,13 +18,18 @@ class Modal {
 // Class for the game
 class Game {
   constructor() {
+    // Control
+    this.withoutSpecialChar = /^[A-Za-z\-]+$/;
+    // Counter
     this.trying = 0;
     this.totalScore = 0;
+    // Words and iteration stokage
     this.allWords = [];
     this.playedWord = [];
     this.word = "";
     this.explodedWord = [];
     this.letterOccurrences = {};
+    // HTML elements
     this.container = document.querySelector("#game-container");
     this.gameHeader = document.querySelector("#game-header");
     this.wordToGuess = document.querySelector("#word-to-guess");
@@ -35,11 +40,15 @@ class Game {
     this.quits = document.querySelector("#quits-btn");
     this.double = document.querySelector("#double-btn");
     this.userScore = document.querySelector("#user-score");
+    this.errorMessage = document.querySelector("#error-message");
+    this.errorBtn = document.querySelector("#error-btn");
+    this.scoreContainer = document.querySelectorAll(".score");
+    // Modals
     this.looseModal = new Modal("loose-modal");
     this.winModal = new Modal("win-modal");
     this.quitsModal = new Modal("quits-modal");
     this.doubleModal = new Modal("double-modal");
-    this.scoreContainer = document.querySelectorAll(".score");
+    this.errorModal = new Modal("error-modal");
 
     // Event listeners
     this.quits.addEventListener("click", () => {
@@ -58,6 +67,10 @@ class Game {
       if (event.key === "Enter") {
         this.displayGuess();
       }
+    });
+
+    this.errorBtn.addEventListener("click", () => {
+      this.errorModal.hide();
     });
   }
 
@@ -153,8 +166,25 @@ class Game {
   // Display the guess result
   displayGuess() {
     if (this.guessWord.value === "") {
+      this.errorMessage.innerText = "Vous devez rentrez un mot !";
+      this.errorModal.display();
       return;
     }
+
+    if (!this.withoutSpecialChar.test(this.guessWord.value)) {
+      this.errorMessage.innerText =
+        "Le mot proposé contient des caractères spéciaux !";
+      this.errorModal.display();
+      return;
+    }
+    if (this.guessWord.value.length < 6) {
+      this.errorMessage.innerText =
+        "Le mot proposé contient moins de six caractères !";
+      this.errorModal.display();
+      return;
+    }
+
+    // if (this.guessWord.value.lenght )
 
     this.trying++;
     let explodedGuessWord = this.guessWord.value.split("");
