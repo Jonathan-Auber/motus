@@ -129,7 +129,6 @@ class Game {
         return;
       }
     }
-    console.log(wordSelected.mot);
 
     // Create an object of occurences of the selected word
     let newExplodedWord = wordSelected.mot.split("");
